@@ -10,7 +10,7 @@ public class Pet {
     private String observacoes;
 
     public Pet(int id, int idDono, String nome, String especie, String raca, String porte, int idade,
-            String observacoes) {
+            String observacoes) throws RegraNegocioException {
 
         setId(id);
         setIdDono(idDono);
@@ -27,9 +27,7 @@ public class Pet {
     }
 
     public void setId(int id) {
-        if (id > 0) {
-            this.id = id;
-        }
+        this.id = id;        
     }
 
     public int getIdDono() {
@@ -37,59 +35,62 @@ public class Pet {
     }
 
     public void setIdDono(int idDono) {
-        if (idDono > 0) {
-            this.idDono = idDono;
-        }
+        this.idDono = idDono;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        if (nome != null && !nome.trim().isEmpty()) {
-            this.nome = nome;
+    public void setNome(String nome) throws RegraNegocioException {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new RegraNegocioException("O nome do animal não pode ser vazio!");
         }
+        this.nome = nome;
     }
 
     public String getEspecie() {
         return especie;
     }
 
-    public void setEspecie(String especie) {
-        if (especie != null && !especie.trim().isEmpty()) {
-            this.especie = especie;
+    public void setEspecie(String especie) throws RegraNegocioException {
+        if (especie == null || especie.trim().isEmpty()) {
+            throw new RegraNegocioException("A espécie do animal não pode ser vazia!");
         }
+        this.especie = especie;
     }
 
     public String getRaca() {
         return raca;
     }
 
-    public void setRaca(String raca) {
-        if (raca != null && !raca.trim().isEmpty()) {
-            this.raca = raca;
+    public void setRaca(String raca) throws RegraNegocioException {
+        if (raca == null || raca.trim().isEmpty()) {
+            throw new RegraNegocioException("A raça do animal não pode ser vazia!");
         }
+        this.raca = raca;
     }
 
     public String getPorte() {
         return porte;
     }
 
-    public void setPorte(String porte) {
-        if (porte != null && !porte.trim().isEmpty()) {
-            this.porte = porte;
+    public void setPorte(String porte) throws RegraNegocioException {
+        if (porte == null || porte.trim().isEmpty()) {
+            throw new RegraNegocioException("O porte do animal não pode ser vazio!");
         }
+        this.porte = porte;
     }
 
     public int getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
-        if (idade >= 0) { // Aceita 0 para filhotes com menos de 1 ano
-            this.idade = idade;
+    public void setIdade(int idade) throws RegraNegocioException {
+        if (idade < 0) {
+            throw new RegraNegocioException("A idade do pet não pode ser negativa!");
         }
+        this.idade = idade;
     }
 
     public String getObservacoes() {
