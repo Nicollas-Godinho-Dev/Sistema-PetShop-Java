@@ -5,7 +5,7 @@ public class Produto {
     private double precoVenda;
     private int quantidade;
 
-    public Produto(int idProduto, String nomeProduto, double precoVenda, int quantidade) {
+    public Produto(int idProduto, String nomeProduto, double precoVenda, int quantidade) throws RegraNegocioException {
 
         setIdProduto(idProduto);
         setNomeProduto(nomeProduto);
@@ -18,39 +18,40 @@ public class Produto {
     }
 
     public void setIdProduto(int idProduto) {
-        if (idProduto > 0) {
-            this.idProduto = idProduto;
-        }
+        this.idProduto = idProduto;
     }
 
     public String getNomeProduto() {
         return nomeProduto;
     }
 
-    public void setNomeProduto(String nomeProduto) {
-        if (nomeProduto != null && !nomeProduto.trim().isEmpty()) {
-            this.nomeProduto = nomeProduto;
+    public void setNomeProduto(String nomeProduto) throws RegraNegocioException {
+        if (nomeProduto == null || nomeProduto.trim().isEmpty()) {
+            throw new RegraNegocioException("O nome do produto não pode ser vazio!");
         }
+        this.nomeProduto = nomeProduto;
     }
 
     public double getPrecoVenda() {
         return precoVenda;
     }
 
-    public void setPrecoVenda(double precoVenda) {
-        if (precoVenda >= 0) {
-            this.precoVenda = precoVenda;
+    public void setPrecoVenda(double precoVenda) throws RegraNegocioException {
+        if (precoVenda <= 0) {
+            throw new RegraNegocioException("O preço do produto deve ser maior que R$ 0,00!");
         }
+        this.precoVenda = precoVenda;
     }
 
     public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
-        if (quantidade >= 0) {
-            this.quantidade = quantidade;
+    public void setQuantidade(int quantidade) throws RegraNegocioException {
+        if (quantidade < 0) {
+            throw new RegraNegocioException("A quantidade em estoque não pode ser negativa!");
         }
+        this.quantidade = quantidade;
     }
 
     public void exibirInformacoes() {
