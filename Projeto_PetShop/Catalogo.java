@@ -5,7 +5,7 @@ public class Catalogo {
     private Double precoServico;
     private int tempo;
 
-    public Catalogo(int idServico, String nomeServico, Double precoServico, int tempo) {
+    public Catalogo(int idServico, String nomeServico, Double precoServico, int tempo) throws RegraNegocioException {
 
         setIdServico(idServico);
         setNomeServico(nomeServico);
@@ -18,39 +18,40 @@ public class Catalogo {
     }
 
     public void setIdServico(int idServico) {
-        if (idServico > 0) {
-            this.idServico = idServico;
-        }
+        this.idServico = idServico;
     }
 
     public String getNomeServico() {
         return nomeServico;
     }
 
-    public void setNomeServico(String nomeServico) {
-        if (nomeServico != null && !nomeServico.trim().isEmpty()) {
-            this.nomeServico = nomeServico;
+    public void setNomeServico(String nomeServico) throws RegraNegocioException {
+        if (nomeServico == null || nomeServico.trim().isEmpty()) {
+            throw new RegraNegocioException("O nome do serviço não pode ser vazio!");
         }
+        this.nomeServico = nomeServico;
     }
 
     public double getPrecoServico() {
         return precoServico;
     }
 
-    public void setPrecoServico(Double precoServico) {
-        if (precoServico > 0) {
-            this.precoServico = precoServico;
+    public void setPrecoServico(Double precoServico) throws RegraNegocioException {
+        if (precoServico == null || precoServico <= 0) {
+            throw new RegraNegocioException("O preço do serviço deve ser maior que R$ 0,00!");
         }
+        this.precoServico = precoServico;
     }
 
     public int getTempo() {
         return tempo;
     }
 
-    public void setTempo(int tempo) {
-        if (tempo > 0) {
-            this.tempo = tempo;
+    public void setTempo(int tempo) throws RegraNegocioException {
+        if (tempo <= 0) {
+            throw new RegraNegocioException("O tempo estimado do serviço deve ser maior que zero minutos!");
         }
+        this.tempo = tempo;
     }
 
     public void exibirInformacoes() {
