@@ -27,7 +27,7 @@ public class Pet {
     }
 
     public void setId(int id) {
-        this.id = id;        
+        this.id = id;
     }
 
     public int getIdDono() {

@@ -6,7 +6,7 @@ public class Cliente {
     private String telefone;
     private String endereco;
 
-    public Cliente(int id, String nome, String cpf, String telefone, String endereco) {
+    public Cliente(int id, String nome, String cpf, String telefone, String endereco) throws RegraNegocioException {
 
         setId(id);
         setNome(nome);
@@ -20,49 +20,51 @@ public class Cliente {
     }
 
     public void setId(int id) {
-        if (id > 0) {
-            this.id = id;
-        }
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        if (nome != null && !nome.trim().isEmpty()) {
-            this.nome = nome;
+    public void setNome(String nome) throws RegraNegocioException {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new RegraNegocioException("O nome do cliente não pode ser vazio!");
         }
+        this.nome = nome;
     }
 
     public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
-        if (cpf != null && !cpf.trim().isEmpty()) {
-            this.cpf = cpf;
+    public void setCpf(String cpf) throws RegraNegocioException {
+        if (cpf == null || cpf.trim().isEmpty()) {
+            throw new RegraNegocioException("O CPF do cliente não pode ser vazio!");
         }
+        this.cpf = cpf;
     }
 
     public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
-        if (telefone != null && !telefone.trim().isEmpty()) {
-            this.telefone = telefone;
+    public void setTelefone(String telefone) throws RegraNegocioException {
+        if (telefone == null || telefone.trim().isEmpty()) {
+            throw new RegraNegocioException("O telefone do cliente não pode ser vazio!");
         }
+        this.telefone = telefone;
     }
 
     public String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
-        if (endereco != null && !endereco.trim().isEmpty()) {
-            this.endereco = endereco;
+    public void setEndereco(String endereco) throws RegraNegocioException {
+        if (endereco == null || endereco.trim().isEmpty()) {
+            throw new RegraNegocioException("O endereço do cliente não pode ser vazio!");
         }
+        this.endereco = endereco;
     }
 
     public void exibirInformacoes() {
