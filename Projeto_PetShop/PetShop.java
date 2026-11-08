@@ -22,6 +22,8 @@ public class PetShop {
 
             exibirMenu();
 
+            try {
+
             opcao = scanner.nextInt();
             scanner.nextLine(); // Clear Buffer
 
@@ -74,6 +76,10 @@ public class PetShop {
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
             }
+        } catch (java.util.InputMismatchException e) {
+                System.out.println("Entrada inválida! Por favor, digite um número.");
+                scanner.nextLine(); // Limpa o buffer 
+            }
 
         } while (opcao != 0);
 
@@ -113,10 +119,13 @@ public class PetShop {
         System.out.print("Endereço: ");
         String endereco = scanner.nextLine();
 
-        Cliente novoCliente = new Cliente(idCliente, nome, cpf, telefone, endereco);
-        clientes.add(novoCliente);
-
-        System.out.println("Cliente cadastrado com sucesso! ID: " + idCliente);
+        try {
+            Cliente novoCliente = new Cliente(idCliente, nome, cpf, telefone, endereco);
+            clientes.add(novoCliente);
+            System.out.println("Cliente cadastrado com sucesso! ID: " + idCliente);
+        } catch (RegraNegocioException e) {
+            System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
+        }
     }
 
     public static void cadastrarPet(Scanner scanner, Random random, ArrayList<Cliente> clientes, ArrayList<Pet> pets) {
@@ -158,10 +167,13 @@ public class PetShop {
         System.out.print("Observações: ");
         String obs = scanner.nextLine();
 
-        Pet novoPet = new Pet(idPet, idDono, nomePet, especie, raca, porte, idade, obs);
-        pets.add(novoPet);
-
-        System.out.println("Pet " + nomePet + " cadastrado com sucesso! ID do Pet: " + idPet);
+        try {
+            Pet novoPet = new Pet(idPet, idDono, nomePet, especie, raca, porte, idade, obs);
+            pets.add(novoPet);
+            System.out.println("Pet " + nomePet + " cadastrado com sucesso! ID do Pet: " + idPet);
+        } catch (RegraNegocioException e) {
+            System.out.println("Erro ao cadastrar pet: " + e.getMessage());
+        }
     }
 
     public static void cadastrarServico(Scanner scanner, Random random, ArrayList<Catalogo> catalogo) {
@@ -180,10 +192,13 @@ public class PetShop {
 
         int idServico = random.nextInt(9000) + 1000;
 
-        Catalogo novoServico = new Catalogo(idServico, nomeServico, precoServico, tempo);
-        catalogo.add(novoServico);
-
-        System.out.println("Serviço cadastrado com sucesso! ID: " + idServico);
+        try {
+            Catalogo novoServico = new Catalogo(idServico, nomeServico, precoServico, tempo);
+            catalogo.add(novoServico);
+            System.out.println("Serviço cadastrado com sucesso! ID: " + idServico);
+        } catch (RegraNegocioException e) {
+            System.out.println("Erro ao cadastrar serviço: " + e.getMessage());
+        }
     }
 
     public static void agendarServico(Scanner scanner, Random random, ArrayList<Pet> pets, ArrayList<Catalogo> catalogo,
@@ -226,10 +241,15 @@ public class PetShop {
         String obsAgendamento = scanner.nextLine();
 
         int idAgen = random.nextInt(9000) + 1000;
-        Agendamento novoAgendamento = new Agendamento(idAgen, id, idServicoEscolhido, dataHora, status, obsAgendamento);
-        agendamentos.add(novoAgendamento);
 
-        System.out.println("Agendamento realizado com sucesso! ID do Agendamento: " + idAgen);
+        try {
+            Agendamento novoAgendamento = new Agendamento(idAgen, id, idServicoEscolhido, dataHora, status,
+                    obsAgendamento);
+            agendamentos.add(novoAgendamento);
+            System.out.println("Agendamento realizado com sucesso! ID do Agendamento: " + idAgen);
+        } catch (RegraNegocioException e) {
+            System.out.println("Erro ao agendar serviço: " + e.getMessage());
+        }
     }
 
     public static void cadastrarProduto(Scanner scanner, Random random, ArrayList<Produto> produtos) {
@@ -248,10 +268,13 @@ public class PetShop {
 
         int idProduto = random.nextInt(9000) + 1000;
 
-        Produto novoProduto = new Produto(idProduto, nomeProduto, precoProduto, quantidadeEstoque);
-        produtos.add(novoProduto);
-
-        System.out.println("Produto cadastrado com sucesso! ID: " + idProduto);
+        try {
+            Produto novoProduto = new Produto(idProduto, nomeProduto, precoProduto, quantidadeEstoque);
+            produtos.add(novoProduto);
+            System.out.println("Produto cadastrado com sucesso! ID: " + idProduto);
+        } catch (RegraNegocioException e) {
+            System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+        }
     }
 
     public static void listarClientes(ArrayList<Cliente> clientes) {
