@@ -8,7 +8,7 @@ public class Agendamento {
     private String observacoes;
 
     public Agendamento(int idAgendamento, int idPet, int idServico, String dataHora, String status,
-            String observacoes) {
+            String observacoes) throws RegraNegocioException {
 
         setIdAgendamento(idAgendamento);
         setIdPet(idPet);
@@ -23,9 +23,7 @@ public class Agendamento {
     }
 
     public void setIdAgendamento(int id) {
-        if (id > 0) {
-            this.idAgendamento = id;
-        }
+        this.idAgendamento = id;
     }
 
     public int getIdPet() {
@@ -33,9 +31,7 @@ public class Agendamento {
     }
 
     public void setIdPet(int id) {
-        if (id > 0) {
-            this.idPet = id;
-        }
+        this.idPet = id;
     }
 
     public int getIdServico() {
@@ -43,29 +39,29 @@ public class Agendamento {
     }
 
     public void setIdServico(int idServico) {
-        if (idServico > 0) {
-            this.idServico = idServico;
-        }
+        this.idServico = idServico;
     }
 
     public String getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(String dataHora) {
-        if (dataHora != null && !dataHora.trim().isEmpty()) {
-            this.dataHora = dataHora;
+    public void setDataHora(String dataHora) throws RegraNegocioException {
+        if (dataHora == null || dataHora.trim().isEmpty()) {
+            throw new RegraNegocioException("A data e hora do agendamento são obrigatórias!");
         }
+        this.dataHora = dataHora;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        if (status != null && !status.trim().isEmpty()) {
-            this.status = status;
+    public void setStatus(String status) throws RegraNegocioException {
+        if (status == null || status.trim().isEmpty()) {
+            throw new RegraNegocioException("O status do agendamento é obrigatório!");
         }
+        this.status = status;
     }
 
     public String getObservacoes() {
